@@ -3,6 +3,10 @@ const url = "https://jsonplaceholder.typicode.com/posts";
 const loadingElement = document.querySelector("#loading");
 const postsContainer = document.querySelector("#posts-container");
 
+// Get id from URL
+const urlSearchParams = new URLSearchParams(window.location.search);
+const postId = urlSearchParams.get("id");
+
 // Get all posts
 async function getAllPosts() {
     const response = await fetch(url);
@@ -11,9 +15,9 @@ async function getAllPosts() {
 
     const data = await response.json();
 
-    console.log(data)
+    console.log(data);
 
-    loadingElement.classList.add("hide")
+    // loadingElement.classList.add("hide");
 
     data.map((post) => {
         const div = document.createElement("div")
@@ -26,12 +30,15 @@ async function getAllPosts() {
         link.innerText = "Ler";
         link.setAttribute("href", `/post.html?id=${post.id}`);
 
-        div.appendChild(title)
-        div.appendChild(body)
-        div.appendChild(link)
-
-        postsContainer.appendChild(div)
+        div.appendChild(title);
+        div.appendChild(body);
+        div.appendChild(link);
+        postsContainer.appendChild(div);
     })
 }
 
-getAllPosts();
+if(!postId) {
+    getAllPosts();
+} else {
+    console.log(postId);
+}
