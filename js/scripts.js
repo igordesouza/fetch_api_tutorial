@@ -89,6 +89,23 @@ function createComment(comment) {
     commentsContainer.appendChild(div);
 }
 
+// Post a comment
+async function postComment(comment) {
+    // POST, PUT, PATCH, DELETE - headers
+
+    const response = await fetch(`${url}/${postId}/comments`, {
+        method: "POST",
+        body: comment,
+        headers: {
+            "Content-type": "application/json",
+        },
+    })
+    const data = await response.json();
+
+    // console.log(data);
+    createComment(data)
+}
+
 if(!postId) {
     getAllPosts();
 } else {
@@ -104,6 +121,9 @@ if(!postId) {
             body: bodyInput.value,
         }
 
-        console.log(comment);
+        // console.log(comment);
+        comment = JSON.stringify(comment);
+
+        postComment(comment);
     })
 }
