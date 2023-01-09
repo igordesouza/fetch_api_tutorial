@@ -7,6 +7,10 @@ const postPage = document.querySelector("#post");
 const postContainer = document.querySelector("#post-container");
 const commentsContainer = document.querySelector("#comments-container");
 
+const commentForm = document.querySelector("#comment-form");
+const emailInput = document.querySelector("#email");
+const bodyInput = document.querySelector("#body");
+
 // Get id from URL
 const urlSearchParams = new URLSearchParams(window.location.search);
 const postId = urlSearchParams.get("id");
@@ -64,7 +68,7 @@ async function getPost(id) {
     postContainer.appendChild(title);
     postContainer.appendChild(body);
 
-    // console.log(dataComments);
+    console.log(dataComments);
 
     dataComments.map((comment) => {
         createComment(comment)
@@ -90,4 +94,16 @@ if(!postId) {
 } else {
     console.log(postId);
     getPost(postId);
+
+    // Add event to comment form.
+    commentForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        let comment = {
+            email: emailInput.value,
+            body: bodyInput.value,
+        }
+
+        console.log(comment);
+    })
 }
